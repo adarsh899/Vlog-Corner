@@ -42,6 +42,9 @@
                     <%}%>
                     <div class="display-comments">
                         <%for(comment of post.comments){%>
+                             <%if(locals.user && (locals.user.id==comment.user.id)){%>
+                                <a href="/comments/destroy/<%=comment.id%>">delete comment</a>
+                                <%}%>
                             <p><%=comment.content%></p>
                             <small>
                                 <%=comment.user.name%>
@@ -52,6 +55,14 @@
                 </p>  
             
         </div>
+    </section>
+    <section id="user-friends">
+        <h4>Friends</h4>
+        <% for(u of all_users){%>
+           <p>
+               <a href="/user/profile/<%=u.id%>"><%=u.name%></a>
+           </p>
+            <%}%>
     </section>
 </body>
 </html>

@@ -1,8 +1,18 @@
 <h1>hello</h1>
-<%if(locals.user){%>
-   <p><%=user.name%></p> 
-   <p><%=user.email%></p>
-   <a href="/user/sign-out">Sign Out</a>
-   <%}%>
 
+   
+  
+    
+    
+<%if(user.id==profile_user.id){%>
+   <form action="/user/update/<%=profile_user.id%>" method="POST">
+      <input type="text" name="name" placeholder="ur name" value="<%=profile_user.name%>" required>
+      <input type="email" name="email" placeholder="ur email" value="<%=profile_user.email%>" required>
+      <input type="submit" value="update">
+   </form>
+   <a href="/user/sign-out">Sign Out</a>
+   <%}else{%>
+      <p><%=profile_user.name%></p> 
+   <p><%=profile_user.email%></p>
+   <%}%>
 

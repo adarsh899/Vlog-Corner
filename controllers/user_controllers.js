@@ -1,25 +1,35 @@
 const User = require('../models/user');
 module.exports.profile = function (req, res) {
-    console.log("hello")
-    if (req.user.id)
-    {
-        User.findById(req.user.id, function (err, user) {
-            console.log(user);
-            if (user) {
-                console.log(user);
-                return res.render('user_profile',
-                    {
-                        title: "User Profile",
-                        user: user
+    
+    // if (req.user.id)
+    // {
+    //     User.findById(req.user.id, function (err, user) {
+            
+    //         if (user) {
+               
+    //             return res.render('user_profile',
+    //                 {
+    //                     title: "User Profile",
+    //                     user: user
                     
-                    })
-            }
-            return res.redirect('/user/sign-in');
-        });
-    }
-    else {
-        return res.redirect('/user/sign-in');
-    }
+    //                 })
+    //         }
+    //         return res.redirect('/user/sign-in');
+    //     });
+    // }
+    // else {
+    //     return res.redirect('/user/sign-in');
+    // }
+    User.findById(req.params.id, function (err, user) {
+        return res.render('user_profile',
+            {
+                title: "User Profile",
+                profile_user: user
+                        
+            });
+        
+    })
+
 }
 module.exports.signUp = function (req, res)
 {
@@ -105,4 +115,20 @@ module.exports.destroySession = function (req, res)
 {
     req.logout();
     return res.redirect('/');
+}
+module.exports.update = function (req, res)
+{
+    // console.log(req.user.id);
+    // console.log(req.params);
+    if (req.user.id == req.params.id)
+    {
+        console.log("djvfjcvf");
+        User.findByIdAndUpdate(req.params.id, req.body, function (err, user) {
+            return res.redirect('/');
+        });
+    }
+    else
+    {
+        return res.status(401).send('Unauthorize');
+    }
 }
