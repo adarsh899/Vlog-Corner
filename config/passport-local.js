@@ -6,8 +6,14 @@ passport.use(new LocalStrategy({
 },
     function(email, password, done) {
       User.findOne({ email: email }, function (err, user) {
-        if (err) { return done(err); }
-        if (!user||user.password!=password) { return done(null, false); }
+          if (err) {
+              console.log("error in reading passport");
+              return done(err);
+          }
+          if (!user || user.password != password) {
+              console.log("invalid password")
+              return done(null, false);
+          }
         
         return done(null, user);
       });
@@ -40,7 +46,10 @@ passport.setAuthenticatedUser = function (req, res, next)
 {
     if (req.isAuthenticated())
     {
+
         res.locals.user = req.user;
-        }
+
+    }
+    next();
     }
 module.exports = passport;

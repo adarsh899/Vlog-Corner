@@ -7,6 +7,46 @@
     <title><%=title%></title>
 </head>
 <body>
-    <h1>this is views</h1>
+    <h1>this is our site</h1>
+    <section id="feed-post">
+        <h4>Posts</h4>
+        <% if(locals.user){%>
+        <form action="/post/create" id="new-post-form" method="POST">
+            <textarea name="content" cols="30" rows="3"></textarea>
+            <input type="submit" value="Post">
+        </form>
+        <%}%>
+        <div id="post-container">
+            <p>
+                <% for(post of posts){%>
+                    <li>
+                        <%= post.content %>
+                        <br>
+                        <small>
+                            by:
+                           <%=post.user.name%> 
+                        </small>
+                    </li>
+                   
+                    <%if(locals.user){%>
+                    <form action="/comments/create"  method="POST">
+                        <input type="text" name="comment" placeholder="type here for comment..">
+                        <input type="hidden" name="post" value="<%=post.id%>">
+                        <input type="submit" value="Add comment">
+                    </form>
+                    <%}%>
+                    <div class="display-comments">
+                        <%for(comment of post.comments){%>
+                            <p><%=comment.content%></p>
+                            <small>
+                                <%=comment.user.name%>
+                            </small>
+                            <%}%>
+                    </div>
+                    <%}%>  
+                </p>  
+            
+        </div>
+    </section>
 </body>
 </html>

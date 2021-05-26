@@ -1,9 +1,12 @@
 const User = require('../models/user');
 module.exports.profile = function (req, res) {
-    if (req.cookies.user_id)
+    console.log("hello")
+    if (req.user.id)
     {
-        User.findById(req.cookies.user_id, function (err, user) {
+        User.findById(req.user.id, function (err, user) {
+            console.log(user);
             if (user) {
+                console.log(user);
                 return res.render('user_profile',
                     {
                         title: "User Profile",
@@ -98,8 +101,8 @@ module.exports.createSession = function (req, res)
 {
     return res.redirect('/');
 }
-module.exports.destroySession = function (req, res)
-{
-    req.logout();
-    return res.redirect('/');
-}
+// module.exports.destroySession = function (req, res)
+// {
+//     req.logout();
+//     return res.redirect('/');
+// }

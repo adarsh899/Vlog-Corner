@@ -17,9 +17,9 @@ app.set('views', './views');
 //passport midleware
 app.use(session({
     name: 'Major Project',
-    secret: 'keyboard cat',
-    resave: false,
+    secret: 'blahsomething',
     saveUninitialized: false,
+    resave: false,
     cookie: {
         maxAge: (1000 * 60 * 100)
     
@@ -27,9 +27,9 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-
-app.use('/', require('./routes/index'))
+app.use(passportLocal.setAuthenticatedUser);
+app.use('/', require('./routes'));
+// app.use('/', require('./routes/index'))
 
 app.listen(port, function (err) {
     if (err)
